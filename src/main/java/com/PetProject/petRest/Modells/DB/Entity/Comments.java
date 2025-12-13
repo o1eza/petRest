@@ -1,17 +1,11 @@
-package com.PetProject.petRest.Modells.Entity;
+package com.PetProject.petRest.Modells.DB.Entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "comments")
 public class Comments {
-
-    public Comments() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +21,17 @@ public class Comments {
     @ManyToOne
     @JoinColumn(name = "receiver_id") // FK
     private User receiver;
+
+
+
+    public Comments() {}
+
+    public Comments(User receiver, String text, User author) {
+        this.receiver = receiver;
+        this.text = text;
+        this.author = author;
+    }
+
 
     public Long getId() {
         return id;
@@ -56,11 +61,6 @@ public class Comments {
         this.text = text;
     }
 
-    public Comments(User receiver, String text, User author) {
-        this.receiver = receiver;
-        this.text = text;
-        this.author = author;
-    }
 
     @Override
     public String toString() {

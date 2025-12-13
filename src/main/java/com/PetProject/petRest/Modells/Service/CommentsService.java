@@ -1,8 +1,9 @@
-package com.PetProject.petRest.Service;
+package com.PetProject.petRest.Modells.Service;
 
-import com.PetProject.petRest.Modells.Repository.CommentRepository;
+import com.PetProject.petRest.Modells.DB.Repository.CommentRepository;
 
-import com.PetProject.petRest.Modells.Entity.Comments;
+import com.PetProject.petRest.Modells.DB.Entity.Comments;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,9 @@ public List<Comments> getAllComments(Long id) {
 }
 
 
+
+
+   
 
 
 

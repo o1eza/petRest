@@ -1,4 +1,4 @@
-package com.PetProject.petRest.Modells.Entity;
+package com.PetProject.petRest.Modells.DB.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -12,16 +12,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
-    @JsonProperty("name")
+    @Column
     private String name;
 
     @Column(name = "lastname")
-    @JsonProperty("lastname")
     private String lastName;
 
     @Column
-    @JsonProperty("age")
     private int age;
 
 
@@ -58,5 +55,15 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

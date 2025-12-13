@@ -1,6 +1,6 @@
-package com.PetProject.petRest.Modells.Repository;
+package com.PetProject.petRest.Modells.DB.Repository;
 
-import com.PetProject.petRest.Modells.Entity.Comments;
+import com.PetProject.petRest.Modells.DB.Entity.Comments;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

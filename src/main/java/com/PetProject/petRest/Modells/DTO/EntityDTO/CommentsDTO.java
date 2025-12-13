@@ -1,18 +1,31 @@
-package com.PetProject.petRest.Modells.DTO;
+package com.PetProject.petRest.Modells.DTO.EntityDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class CommentsDTO {
-    @JsonProperty("id")
-    private Long id;
-    @JsonProperty("author")
+
+    @NotNull
+    @JsonProperty
     private Long author;
-    @JsonProperty("receiver")
+    @NotNull
+    @JsonProperty
     private Long receiver;
-    @JsonProperty("text")
+    @Pattern(regexp = "^[A-Za-zА-Яа-яЁё'-]+$")
+    @NotBlank
+    @JsonProperty
     private String text;
 
 
+    public  CommentsDTO(){}
+
+    public CommentsDTO(Long author, Long receiver, String text) {
+        this.author = author;
+        this.receiver = receiver;
+        this.text = text;
+    }
 
     public String getText() {
         return text;
@@ -38,11 +51,4 @@ public class CommentsDTO {
         this.author = author;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
