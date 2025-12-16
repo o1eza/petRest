@@ -1,29 +1,16 @@
-package com.PetProject.petRest.Modells.DTO.EntityDTO;
+package com.PetProject.petRest.Modells.DTO.EntityDTO.Response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.*;
+public class UserResDTO {
 
-public class UserDTO {
-
-    @Pattern(regexp = "^[A-Za-zА-Яа-яЁё'-]+$")
-    @NotBlank
-    @JsonProperty
     private String name;
 
-    @Pattern(regexp = "^[A-Za-zА-Яа-яЁё'-]+$")
-    @NotBlank
-    @JsonProperty("lastName")
     private String lastName;
 
-    @NotNull
-    @Min(3)
-    @Max(111)
-    @JsonProperty
     private int age;
 
-    public UserDTO() {}
+    public UserResDTO() {}
 
-    public UserDTO(String name, String lastName, int age) {
+    public UserResDTO(String name, String lastName, int age) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
@@ -52,5 +39,4 @@ public class UserDTO {
     public void setAge(int age) {
         this.age = age;
     }
-
 }

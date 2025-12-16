@@ -1,8 +1,13 @@
 package com.PetProject.petRest.Controllers;
 
-import com.PetProject.petRest.Modells.DTO.EntityDTO.UserDTO;
+import com.PetProject.petRest.Modells.DB.Entity.Comments;
+import com.PetProject.petRest.Modells.DTO.EntityDTO.MapperDTO.UserResMapper;
+import com.PetProject.petRest.Modells.DTO.EntityDTO.Request.UserReqDTO;
 import com.PetProject.petRest.Modells.DB.Entity.User;
-import com.PetProject.petRest.Modells.DTO.MapperDTO.UserMapperDTO;
+import com.PetProject.petRest.Modells.DTO.EntityDTO.MapperDTO.UserReqMapper;
+import com.PetProject.petRest.Modells.DTO.EntityDTO.Response.CommentsResDTO;
+import com.PetProject.petRest.Modells.DTO.EntityDTO.Response.UserResDTO;
+import com.PetProject.petRest.Modells.DTO.ServiceDTO.APIResponseDTO;
 import com.PetProject.petRest.Modells.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,45 +18,62 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/User")
 public class UserControllers {
 
 private final UserService userService;
-private final UserMapperDTO userMapperDTO;
 
     @Autowired
-    public UserControllers(UserService userService, UserMapperDTO userMapperDTO) {
+    public UserControllers(UserService userService) {
         this.userService = userService;
-        this.userMapperDTO = userMapperDTO;
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-    @PostMapping("/User")
-    private ResponseEntity<String> addUser(@RequestBody @Valid UserDTO user) {
-        String s = userService.addUser(userMapperDTO.toUser(user));
-        return new ResponseEntity<>(s , HttpStatus.OK);
+    @PostMapping("")
+    private ResponseEntity<APIResponseDTO<UserResDTO>> addUser(@RequestBody @Valid UserReqDTO userReqDTO) {
+
+        UserResDTO commentsResDTO = userService.addUser(userReqDTO);
+
+        return new ResponseEntity<>(APIResponseDTO.success(commentsResDTO) , HttpStatus.OK);
     }
 
-    @DeleteMapping("/User/{id}")
-    private ResponseEntity<String> deleteUser(@PathVariable Long id) {
-       String s = userService.deleteUser(id);
-        return new ResponseEntity<>(s , HttpStatus.OK);
+
+    @PatchMapping("")
+    private ResponseEntity<APIResponseDTO<UserResDTO>> setUser(@RequestBody @Valid UserReqDTO userReqDTO) {
+
+       UserResDTO userResDTO = userService.updateUser(userReqDTO);
+
+       return new ResponseEntity<>( APIResponseDTO.success(userResDTO), HttpStatus.OK);
     }
 
-    @PatchMapping("/User")
-    private ResponseEntity<String> setUser(@RequestBody @Valid UserDTO user) {
-        String s = userService.updateUser(userMapperDTO.toUser(user));
-        return new ResponseEntity<>(s , HttpStatus.OK);
+
+    @GetMapping("/{id}")
+    private ResponseEntity<APIResponseDTO<UserResDTO> > getUser(@PathVariable Long id) {
+
+       UserResDTO userResDTO =  userService.findUser(id);
+
+       return new ResponseEntity<>(APIResponseDTO.success(userResDTO) , HttpStatus.OK);
     }
 
-    @GetMapping("/User/{id}")
-   private ResponseEntity<User> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity< APIResponseDTO<String> > deleteUser(@PathVariable Long id) {
+
+        String s = userService.deleteUser(id);
+
+        return new ResponseEntity<>(APIResponseDTO.success(s) , HttpStatus.OK);
+
     }
 
-    @GetMapping("/User")
-    private ResponseEntity< List<User> > getAllUsers() {
-        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+
+    @GetMapping("")
+    private ResponseEntity< APIResponseDTO< List<UserResDTO> > > getAllUsers() {
+
+    List<UserResDTO> listUserResDTO = userService.findAllUsers();
+
+    return new ResponseEntity<>(APIResponseDTO.success(listUserResDTO),HttpStatus.OK);
+
     }
 
 
